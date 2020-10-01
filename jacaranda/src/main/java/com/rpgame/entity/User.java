@@ -1,7 +1,8 @@
 package com.rpgame.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,151 +20,87 @@ public class User implements Comparable<User>, Serializable{
 	private String mail;
 	private boolean vip;
 	private int id;
+	private List<Personaje> personajes;
 	
 	public User() {
 		super();
-	}
-	
-
-	
-	public User(String name, String surname, String userName, String mail) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.userName = userName;
-		this.mail = mail;
+		this.personajes = new ArrayList();
 	}
 
-
-
-
-
-	public User(String name, String surname, String userName, String mobileNumber, String mail, boolean vip, int id) {
+	public User(String name, String surname, String userName, String mobileNumber, String mail, int id) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.userName = userName;
 		this.mobileNumber = mobileNumber;
 		this.mail = mail;
-		this.vip = vip;
 		this.id = id;
+		this.personajes = new ArrayList();
 	}
-
-
-
-
 
 	public String getName() {
 		return name;
 	}
 
-
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
-
 
 	public String getSurname() {
 		return surname;
 	}
 
-
-
-
-
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
-
-
-
 
 	public String getUserName() {
 		return userName;
 	}
 
-
-
-
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-
-
-
 
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-
-
-
-
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-
-
-
-
 
 	public String getMail() {
 		return mail;
 	}
 
-
-
-
-
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-
-
-
-
 
 	public boolean isVip() {
 		return vip;
 	}
 
-
-
-
-
 	public void setVip(boolean vip) {
 		this.vip = vip;
 	}
-
-
-
-
 
 	public int getId() {
 		return id;
 	}
 
-
-
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public List<Personaje> getPersonajes() {
+		return personajes;
+	}
 
-
-
+	public void setPersonajes(List<Personaje> personajes) {
+		this.personajes = personajes;
+	}
 
 	public int compareTo(User other) {
 		return Integer.valueOf(this.getId()).compareTo(other.getId());
