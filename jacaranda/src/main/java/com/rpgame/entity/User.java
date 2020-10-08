@@ -13,6 +13,7 @@ import java.util.List;
 
 
 public class User implements Comparable<User>, Serializable{
+	private static int idTota = 1;
 	private String name;
 	private String surname;
 	private String userName;
@@ -25,16 +26,18 @@ public class User implements Comparable<User>, Serializable{
 	public User() {
 		super();
 		this.personajes = new ArrayList();
+		this.id = idTota;
+		idTota ++;
 	}
 
-	public User(String name, String surname, String userName, String mobileNumber, String mail, int id) {
+	public User(String name, String surname, String userName, String mobileNumber, String mail) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.userName = userName;
 		this.mobileNumber = mobileNumber;
 		this.mail = mail;
-		this.id = id;
+		this.id =+ idTota;
 		this.personajes = new ArrayList();
 	}
 
@@ -90,10 +93,6 @@ public class User implements Comparable<User>, Serializable{
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public List<Personaje> getPersonajes() {
 		return personajes;
 	}
@@ -104,6 +103,12 @@ public class User implements Comparable<User>, Serializable{
 
 	public int compareTo(User other) {
 		return Integer.valueOf(this.getId()).compareTo(other.getId());
+	}
+
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", surname=" + surname + ", userName=" + userName + ", mobileNumber="
+				+ mobileNumber + ", mail=" + mail + ", vip=" + vip + ", id=" + id + ", personajes=" + personajes + "]";
 	}
 
 }

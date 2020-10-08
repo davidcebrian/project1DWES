@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Personaje entity
+ * @author estudiante
+ *
+ */
 public class Personaje implements Comparable<Personaje>, Serializable{
 	private String name;
 	private String cara;
@@ -13,7 +18,8 @@ public class Personaje implements Comparable<Personaje>, Serializable{
 	private String tipo;
 	private int poder;
 	private int nivel;
-	private List<Ataques> ataques;
+	private int perteneceUsuario;
+	private List<Ataque> ataques;
 	private Mascota mascota;
 	
 	
@@ -22,8 +28,9 @@ public class Personaje implements Comparable<Personaje>, Serializable{
 	}
 	
 	
-	public Personaje(String name, String cara, String cuerpo, String pelo, String ropa, String tipo, int poder) {
+	public Personaje(int usuario, String name, String cara, String cuerpo, String pelo, String ropa, String tipo, int poder) {
 		super();
+		this.perteneceUsuario = usuario;
 		this.name = name;
 		this.cara = cara;
 		this.cuerpo = cuerpo;
@@ -36,6 +43,16 @@ public class Personaje implements Comparable<Personaje>, Serializable{
 	}
 	
 	
+
+
+	public int getUsuario() {
+		return perteneceUsuario;
+	}
+
+
+	public void setUsuario(int usuario) {
+		this.perteneceUsuario = usuario;
+	}
 
 
 	public String getName() {
@@ -118,12 +135,12 @@ public class Personaje implements Comparable<Personaje>, Serializable{
 	}
 
 
-	public List<Ataques> getAtaques() {
+	public List<Ataque> getAtaques() {
 		return ataques;
 	}
 
 
-	public void setAtaques(List<Ataques> ataques) {
+	public void setAtaques(List<Ataque> ataques) {
 		this.ataques = ataques;
 	}
 
@@ -135,6 +152,15 @@ public class Personaje implements Comparable<Personaje>, Serializable{
 
 	public void setMascota(Mascota mascota) {
 		this.mascota = mascota;
+	}
+
+		
+
+	@Override
+	public String toString() {
+		return "Personaje [name=" + name + ", cara=" + cara + ", cuerpo=" + cuerpo + ", pelo=" + pelo + ", ropa=" + ropa
+				+ ", tipo=" + tipo + ", poder=" + poder + ", nivel=" + nivel + ", ataques=" + ataques + ", mascota="
+				+ mascota + "]";
 	}
 
 
