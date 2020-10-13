@@ -20,20 +20,9 @@ public class DatabaseService {
 	public DatabaseService() {
 		super();
 		this.usuarios = new ArrayList<>();
-		User us0 = new User("Rizo","PAM","RAISO","689299299", "davidcebrian@hotmail");
-		Personaje pj = new Personaje(us0.getId(),"pepe","cara1","fornido","largo","hippie","elfo",400);
-		Mascota mas = new Mascota("willy","wolf","fire");
-		Ataque atq = new Ataque("Puño",50.5,"hielo","fisico",3.2,3);
-		pj.setMascota(mas);
-		pj.getAtaques().add(atq);
-		us0.getPersonajes().add(pj);
-		this.usuarios.add(us0);
 		this.personajes = new ArrayList<>();
-		this.personajes.add(pj);
 		this.ataques = new ArrayList<>();
-		this.ataques.add(atq);
 		this.mascotas = new ArrayList<>();
-		this.mascotas.add(mas);
 	}
 	
 	public DatabaseService(List<User> usuarios, List<Personaje> personajes, List<Ataque> ataques,

@@ -17,15 +17,11 @@ public class UserService {
 	
 	public ResponseEntity<?> readUser(int id) {
 		ResponseEntity<?> customer = null;
-		Iterator<User> it = db.getUsuarios().iterator();
-		boolean flag = false;
-		while(it.hasNext() && !flag) {
-			User elemento = it.next();
-			if(elemento.getId() == id) {
-				customer = ResponseEntity.status(HttpStatus.OK).body(elemento);
+		User us = db.getUsuarios().stream().filter(u -> u.getId() == id).findFirst().get();
+			if(us != null) {
+				customer = ResponseEntity.status(HttpStatus.OK).body(us);
 			}else {
 				customer = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
-			}
 		}
 		return customer;
 	}
