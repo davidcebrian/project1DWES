@@ -29,32 +29,32 @@ public class AtaqueCRUDController {
 	@Autowired
 	private AtaqueService ataque;
 	
-	@GetMapping("/GET")
+	@GetMapping()
 	public ResponseEntity<?> getAtaques(){
 		return ataque.getAtaques();
 	}
 	
-	@GetMapping("/GET-ataquespj/{idPj}")
+	@GetMapping("/personaje/{idPj}")
 	public ResponseEntity<?> getAtaquesPj(@PathVariable String idPj){
 		return ataque.getAtaquesPj(idPj);
 	}
 	
-	@GetMapping("/GET-ataque/{idAtaque}")
+	@GetMapping("/{idAtaque}")
 	public ResponseEntity<?> getAtaque(@PathVariable int idAtaque){
 		return ataque.getAtaque(idAtaque);
 	}
 	
-	@PostMapping("/POST/{idPersonaje}")
+	@PostMapping("/personaje/{idPersonaje}")
 	public ResponseEntity<?> postAtaque(@RequestBody Ataque sent, @PathVariable String idPersonaje) {
 		return ataque.postAtaque(sent, idPersonaje);
 	}
 	
-	@PutMapping("/PUT")
+	@PutMapping()
 	public ResponseEntity<?> putAtaque(@RequestBody Ataque change){
 		return ataque.putAtaque(change);
 	}
 	
-	@DeleteMapping("/DELETE/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteAtaque(@PathVariable int id){
 		return ataque.deleteAtaque(id);
 	}

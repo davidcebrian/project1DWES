@@ -32,22 +32,22 @@ public class UserCRUDController {
 	@Autowired
 	private UserService us;
 	
-	@GetMapping("/read/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> readUser(@PathVariable int id) {
 		return us.readUser(id);
 	}
 	
-	@PostMapping("/create")
+	@PostMapping()
 	public ResponseEntity<?> createUser(@RequestBody User sent) {
 		return us.createUser(sent);
 	}
 	
-	@PutMapping("/update")
+	@PutMapping()
 	public ResponseEntity<?> updateUser(@RequestBody User change){
 		return us.updateUser(change);
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable int id){
 		return us.deleteUser(id);
 	}

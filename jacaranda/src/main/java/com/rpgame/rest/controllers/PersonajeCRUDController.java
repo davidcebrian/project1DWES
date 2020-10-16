@@ -28,32 +28,32 @@ public class PersonajeCRUDController {
 	@Autowired
 	private PersonajeService pj;
 	
-	@GetMapping("/GET")
+	@GetMapping()
 	public ResponseEntity<?> getPersonajes(){
 		return pj.getPersonajes();
 	}
 	
-	@GetMapping("/GET-pjuser/{idUser}")
+	@GetMapping("/user/{idUser}")
 	public ResponseEntity<?> getPersonajesUser(@PathVariable int idUser){
 		return pj.getPersonajesUser(idUser);
 	}
 	
-	@GetMapping("/GET-pj/{idPersonaje}")
+	@GetMapping("/{idPersonaje}")
 	public ResponseEntity<?> getPersonaje(@PathVariable String idPersonaje){
 		return pj.getPersonaje(idPersonaje);
 	}
 	
-	@PostMapping("/POST/{idUser}")
+	@PostMapping("/{idUser}")
 	public ResponseEntity<?> postPersonaje(@RequestBody Personaje sent, @PathVariable int idUser){
 		return pj.postPersonaje(sent, idUser);
 	}
 	
-	@PutMapping("/PUT")
+	@PutMapping()
 	public ResponseEntity<?> putPersonaje(@RequestBody Personaje change){
 		return pj.putPersonaje(change);
 	}
 	
-	@DeleteMapping("/DELETE/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePersonaje(@PathVariable String id){
 		return pj.deletePersonaje(id);
 	}
