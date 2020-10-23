@@ -1,6 +1,7 @@
 package com.rpgame.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,16 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rpgame.entity.Personaje;
-import com.rpgame.entity.User;
-import com.rpgame.repositorys.PersonajeRepository;
 import com.rpgame.service.PersonajeService;
 
 /**
  * Personaje CRUD Controller
- * 
  * @author estudiante
- * 
+ *	
  */
+
 
 @RestController
 @RequestMapping(path = "/personaje")
@@ -29,38 +28,37 @@ public class PersonajeCRUDController {
 	@Autowired
 	private PersonajeService pj;
 	
-	@Autowired
-	private PersonajeRepository personajeRepository;
-
 	@GetMapping()
-	public ResponseEntity<?> getPersonajes() {
-		return ResponseEntity.ok(personajeRepository.findAll());
+	public ResponseEntity<?> getPersonajes(){
+		return pj.getPersonajes();
 	}
-
-	@GetMapping("/user")
-	public ResponseEntity<?> getPersonajesUser(@RequestBody User idUser) {
+	
+	@GetMapping("/user/{idUser}")
+	public ResponseEntity<?> getPersonajesUser(@PathVariable int idUser){
 		return pj.getPersonajesUser(idUser);
 	}
-
+	
 	@GetMapping("/{idPersonaje}")
-	public ResponseEntity<?> getPersonaje(@PathVariable String idPersonaje) {
+	public ResponseEntity<?> getPersonaje(@PathVariable String idPersonaje){
 		return pj.getPersonaje(idPersonaje);
 	}
-
+	
 	@PostMapping("/{idUser}")
-	public ResponseEntity<?> postPersonaje(@RequestBody Personaje sent, @PathVariable int idUser) {
-		personajeRepository.save(sent);
-		return ResponseEntity.ok(sent);
+	public ResponseEntity<?> postPersonaje(@RequestBody Personaje sent, @PathVariable int idUser){
+		return pj.postPersonaje(sent, idUser);
 	}
-
+	
 	@PutMapping()
-	public ResponseEntity<?> putPersonaje(@RequestBody Personaje change) {
+	public ResponseEntity<?> putPersonaje(@RequestBody Personaje change){
 		return pj.putPersonaje(change);
 	}
-
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletePersonaje(@PathVariable String id) {
+	public ResponseEntity<?> deletePersonaje(@PathVariable String id){
 		return pj.deletePersonaje(id);
 	}
-
+	
+	
+	
+	
 }

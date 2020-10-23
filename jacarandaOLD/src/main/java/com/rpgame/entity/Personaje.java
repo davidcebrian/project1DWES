@@ -4,30 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
 /**
  * Personaje entity
- * 
  * @author estudiante
  *
  */
-
-@Entity
-public class Personaje implements Comparable<Personaje>, Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idPersonaje;
+public class Personaje implements Comparable<Personaje>, Serializable{
 	private String name;
 	private String cara;
 	private String cuerpo;
@@ -36,26 +18,19 @@ public class Personaje implements Comparable<Personaje>, Serializable {
 	private String tipo;
 	private int poder;
 	private int nivel;
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "personaje_FK"),name = "idUsuario")
-	private User user;
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "personaje_ataques",
-			   joinColumns = @JoinColumn(foreignKey = @ForeignKey(name = "personaje_ataque_FK"),name="idPersonaje"),
-			   inverseJoinColumns = @JoinColumn(foreignKey = @ForeignKey(name = "ataque_personaje_FK"),name="idAtaque"))
+	private int perteneceUsuario;
 	private List<Ataque> ataques;
-	@OneToOne
-	@JoinColumn(name="idPersonaje")
 	private Mascota mascota;
-
+	
+	
 	public Personaje() {
 		this.ataques = new ArrayList();
 	}
-
-	public Personaje(User usuario, String name, String cara, String cuerpo, String pelo, String ropa, String tipo,
-			int poder) {
+	
+	
+	public Personaje(int usuario, String name, String cara, String cuerpo, String pelo, String ropa, String tipo, int poder) {
 		super();
-		this.user = usuario;
+		this.perteneceUsuario = usuario;
 		this.name = name;
 		this.cara = cara;
 		this.cuerpo = cuerpo;
@@ -66,98 +41,120 @@ public class Personaje implements Comparable<Personaje>, Serializable {
 		this.nivel = 1;
 		this.ataques = new ArrayList();
 	}
+	
+	
 
-	public User getUsuario() {
-		return user;
+
+	public int getUsuario() {
+		return perteneceUsuario;
 	}
 
-	public void setUsuario(User usuario) {
-		this.user = usuario;
+
+	public void setUsuario(int usuario) {
+		this.perteneceUsuario = usuario;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public String getCara() {
 		return cara;
 	}
 
-	public Long getIdPersonaje() {
-		return idPersonaje;
-	}
 
 	public void setCara(String cara) {
 		this.cara = cara;
 	}
 
+
 	public String getCuerpo() {
 		return cuerpo;
 	}
+
 
 	public void setCuerpo(String cuerpo) {
 		this.cuerpo = cuerpo;
 	}
 
+
 	public String getPelo() {
 		return pelo;
 	}
+
 
 	public void setPelo(String pelo) {
 		this.pelo = pelo;
 	}
 
+
 	public String getRopa() {
 		return ropa;
 	}
+
 
 	public void setRopa(String ropa) {
 		this.ropa = ropa;
 	}
 
+
 	public String getTipo() {
 		return tipo;
 	}
+
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
+
 	public int getPoder() {
 		return poder;
 	}
+
 
 	public void setPoder(int poder) {
 		this.poder = poder;
 	}
 
+
 	public int getNivel() {
 		return nivel;
 	}
+
 
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
 	}
 
+
 	public List<Ataque> getAtaques() {
 		return ataques;
 	}
+
 
 	public void setAtaques(List<Ataque> ataques) {
 		this.ataques = ataques;
 	}
 
+
 	public Mascota getMascota() {
 		return mascota;
 	}
 
+
 	public void setMascota(Mascota mascota) {
 		this.mascota = mascota;
 	}
+
+		
 
 	@Override
 	public String toString() {
@@ -165,6 +162,7 @@ public class Personaje implements Comparable<Personaje>, Serializable {
 				+ ", tipo=" + tipo + ", poder=" + poder + ", nivel=" + nivel + ", ataques=" + ataques + ", mascota="
 				+ mascota + "]";
 	}
+
 
 	@Override
 	public int compareTo(Personaje arg0) {

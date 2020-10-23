@@ -4,36 +4,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  * Customer entity
- * 
  * @author estudiante
  *
  */
 
-@Entity
-public class User implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idUsuario;
+
+public class User implements Comparable<User>, Serializable{
+	private static int idTota = 1;
 	private String name;
 	private String surname;
 	private String userName;
 	private String mobileNumber;
 	private String mail;
 	private boolean vip;
-	@OneToMany(mappedBy = "user")
+	private int id;
 	private List<Personaje> personajes;
-
+	
 	public User() {
 		super();
 		this.personajes = new ArrayList();
+		this.id = idTota;
+		idTota ++;
 	}
 
 	public User(String name, String surname, String userName, String mobileNumber, String mail) {
@@ -43,6 +37,7 @@ public class User implements Serializable {
 		this.userName = userName;
 		this.mobileNumber = mobileNumber;
 		this.mail = mail;
+		this.id =+ idTota;
 		this.personajes = new ArrayList();
 	}
 
@@ -94,8 +89,8 @@ public class User implements Serializable {
 		this.vip = vip;
 	}
 
-	public Long getId() {
-		return idUsuario;
+	public int getId() {
+		return id;
 	}
 
 	public List<Personaje> getPersonajes() {
@@ -106,10 +101,14 @@ public class User implements Serializable {
 		this.personajes = personajes;
 	}
 
+	public int compareTo(User other) {
+		return Integer.valueOf(this.getId()).compareTo(other.getId());
+	}
+
 	@Override
 	public String toString() {
 		return "User [name=" + name + ", surname=" + surname + ", userName=" + userName + ", mobileNumber="
-				+ mobileNumber + ", mail=" + mail + ", vip=" + vip + ", id=" + idUsuario + ", personajes=" + personajes + "]";
+				+ mobileNumber + ", mail=" + mail + ", vip=" + vip + ", id=" + id + ", personajes=" + personajes + "]";
 	}
 
 }

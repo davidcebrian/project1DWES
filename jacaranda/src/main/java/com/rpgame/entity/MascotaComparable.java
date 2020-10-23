@@ -2,7 +2,7 @@ package com.rpgame.entity;
 
 import java.util.Comparator;
 
-public class MascotaComparable implements Comparator<Mascota>{
+public class MascotaComparable implements Comparator<Mascota> {
 
 	@Override
 	public int compare(Mascota arg0, Mascota arg1) {

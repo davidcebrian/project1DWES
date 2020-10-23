@@ -2,7 +2,7 @@ package com.rpgame.entity;
 
 import java.util.Comparator;
 
-public class UserComparableNombre implements Comparator<User>{
+public class UserComparableNombre implements Comparator<User> {
 
 	@Override
 	public int compare(User arg0, User arg1) {

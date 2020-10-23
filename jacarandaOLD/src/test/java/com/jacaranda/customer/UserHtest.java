@@ -11,34 +11,34 @@ import com.rpgame.entity.UserComparableNombre;
 
 class UserHtest {
 
-	private List<User> customers = new ArrayList<>();
-
+	private List<User> customers = new ArrayList<> ();
+	
 	@Test
 	public void testFailOnNull() {
 		List<User> customers = null;
-
+		
 		try {
 			customers.stream().sorted();
-		} catch (Exception e) {
-			assert (true);
+		}catch(Exception e) {
+			assert(true);
 		}
 	}
-
+	
 	@Test
 	public void testFailOnEmpty() {
 		List<User> vacio = new ArrayList<User>();
 		try {
 			vacio.sort(new UserComparableId());
-			assert (true);
-		} catch (Exception e) {
-			assert (false);
+			assert(true);
+		}catch(Exception e) {
+			assert(false);
 		}
 	}
-
+	
 	@Test
-	public void testOrderedCollection() {
+	public void testOrderedCollection() {	
 		customers.sort(new UserComparableNombre());
-
+		
 	}
 
 }

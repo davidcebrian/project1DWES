@@ -16,7 +16,7 @@ public class DatabaseService {
 	private List<Personaje> personajes;
 	private List<Ataque> ataques;
 	private List<Mascota> mascotas;
-
+	
 	public DatabaseService() {
 		super();
 		this.usuarios = new ArrayList<>();
@@ -24,7 +24,7 @@ public class DatabaseService {
 		this.ataques = new ArrayList<>();
 		this.mascotas = new ArrayList<>();
 	}
-
+	
 	public DatabaseService(List<User> usuarios, List<Personaje> personajes, List<Ataque> ataques,
 			List<Mascota> mascotas) {
 		super();
@@ -49,5 +49,8 @@ public class DatabaseService {
 	public List<Mascota> getMascotas() {
 		return mascotas;
 	}
-
+	
+	
+	
+	
 }
