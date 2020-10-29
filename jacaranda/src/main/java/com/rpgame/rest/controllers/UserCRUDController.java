@@ -56,7 +56,7 @@ public class UserCRUDController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable int id) {
+	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
 		return us.deleteUser(id);
 	}
 

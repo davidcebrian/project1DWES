@@ -18,7 +18,12 @@ public class UserService {
 	
 	public ResponseEntity<?> readAllUser() {
 		ResponseEntity<?> customer = null;
+		if(db.getUsuarios().isEmpty()) {
+			customer = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay usuarios.");
+		}else {
+			
 		customer = ResponseEntity.status(HttpStatus.OK).body(db.getUsuarios());
+		}
 		return customer;
 	}
 	
@@ -34,8 +39,14 @@ public class UserService {
 	}
 	
 	public ResponseEntity<?> createUser(User sent) {
+		ResponseEntity<?> customer = null;
+		if(sent.getName().equals("") || sent.getMail().equals("")) {
+			customer = ResponseEntity.status(HttpStatus.NOT_FOUND).body("Introduzca usuario válido.");
+		}else {
 		db.getUsuarios().add(sent);
-		return ResponseEntity.status(HttpStatus.CREATED).body(sent);
+		customer = ResponseEntity.status(HttpStatus.CREATED).body(sent);
+		}
+		return customer;
 	}
 	
 	

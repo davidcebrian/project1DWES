@@ -92,42 +92,28 @@ public class UserService {
 
 	public ResponseEntity<?> updateUser(User change) {
 		ResponseEntity<?> ent = null;
-		Iterator<User> it = db.getUsuarios().iterator();
-		boolean flag = false;
-		while (it.hasNext() && !flag) {
-			User elemento = it.next();
-			if (elemento.getId() == change.getId()) {
-				elemento.setName(change.getName());
-				elemento.setSurname(change.getSurname());
-				flag = true;
-				ent = ResponseEntity.ok(change);
-			} else {
-				ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
-			}
+		User user = userRepository.findUserByName(change.getName());
+		if (user != null) {
+			user.setName(change.getName());
+			user.setSurname(change.getSurname());
+			user.setUserName(change.getUserName());
+			ent = ResponseEntity.ok(user);
+		} else {
+			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
 		}
-		// customers.stream().filter(c -> c.getId() ==
-		// change.getId()).findFirst().get();
 		return ent;
 	}
+		// customers.stream().filter(c -> c.getId() ==
+		// change.getId()).findFirst().get();
 
-	public ResponseEntity<?> deleteUser(int id) {
+	public ResponseEntity<?> deleteUser(Long id) {
 		ResponseEntity<?> ent = null;
-		Iterator<User> it = db.getUsuarios().iterator();
-		User us = null;
-		while (it.hasNext() && us == null) {
-			User elemento = it.next();
-			if (elemento.getId() == id) {
-				db.getUsuarios().remove(elemento);
-				for (Personaje p : db.getPersonajes()) {
-					if (p.getUsuario().getId() == id) {
-						p.setUsuario(null);
-						us = elemento;
-					}
-				}
-				ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuario borrado.");
-			} else {
-				ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
-			}
+		User user = userRepository.findUserByIdUsuario(id);
+		if(user != null) {
+			userRepository.deleteById(id);			
+			ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuario borrado.");
+		}else {
+			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");			
 		}
 		return ent;
 	}
