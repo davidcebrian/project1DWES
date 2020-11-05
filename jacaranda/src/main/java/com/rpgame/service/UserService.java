@@ -1,6 +1,6 @@
 package com.rpgame.service;
 
-import java.util.Iterator;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.rpgame.entity.Personaje;
+
 import com.rpgame.entity.User;
 import com.rpgame.repositorys.UserRepository;
 
 @Service
 public class UserService {
-	@Autowired
-	private DatabaseService db;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -73,31 +71,29 @@ public class UserService {
 //		return ResponseEntity.status(HttpStatus.CREATED).body(sent);
 //	}
 
-	public ResponseEntity<?> addPersonajeAUser(Personaje pj, int user) {
-		ResponseEntity<?> ent = null;
-		Iterator<User> it = db.getUsuarios().iterator();
-		boolean flag = false;
-		while (it.hasNext() && !flag) {
-			User elemento = it.next();
-			if (elemento.getId() == user) {
-				elemento.getPersonajes().add(pj);
-				flag = true;
-				ent = ResponseEntity.status(HttpStatus.OK).body(pj);
-			} else {
-				ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
-			}
-		}
-		return ent;
-	}
+//	public ResponseEntity<?> addPersonajeAUser(Personaje pj, int user) {
+//		ResponseEntity<?> ent = null;
+//		Iterator<User> it = db.getUsuarios().iterator();
+//		boolean flag = false;
+//		while (it.hasNext() && !flag) {
+//			User elemento = it.next();
+//			if (elemento.getId() == user) {
+//				elemento.getPersonajes().add(pj);
+//				flag = true;
+//				ent = ResponseEntity.status(HttpStatus.OK).body(pj);
+//			} else {
+//				ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+//			}
+//		}
+//		return ent;
+//	}
 
 	public ResponseEntity<?> updateUser(User change) {
 		ResponseEntity<?> ent = null;
 		User user = userRepository.findUserByName(change.getName());
-		if (user != null) {
-			user.setName(change.getName());
-			user.setSurname(change.getSurname());
-			user.setUserName(change.getUserName());
-			ent = ResponseEntity.ok(user);
+		if (change != null && user != null) {
+			userRepository.updateUser(change.getId(), change.getUserName());
+			ent = ResponseEntity.ok(change);
 		} else {
 			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
 		}

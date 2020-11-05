@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rpgame.entity.Personaje;
-import com.rpgame.entity.User;
 import com.rpgame.repositorys.PersonajeRepository;
 import com.rpgame.service.PersonajeService;
 
@@ -26,6 +25,7 @@ import com.rpgame.service.PersonajeService;
 @RestController
 @RequestMapping(path = "/personaje")
 public class PersonajeCRUDController {
+	
 	@Autowired
 	private PersonajeService pj;
 	
@@ -37,13 +37,9 @@ public class PersonajeCRUDController {
 		return ResponseEntity.ok(personajeRepository.findAll());
 	}
 
-	@GetMapping("/user")
-	public ResponseEntity<?> getPersonajesUser(@RequestBody User idUser) {
-		return pj.getPersonajesUser(idUser);
-	}
 
 	@GetMapping("/{idPersonaje}")
-	public ResponseEntity<?> getPersonaje(@PathVariable String idPersonaje) {
+	public ResponseEntity<?> getPersonaje(@PathVariable Long idPersonaje) {
 		return pj.getPersonaje(idPersonaje);
 	}
 
@@ -59,7 +55,7 @@ public class PersonajeCRUDController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletePersonaje(@PathVariable String id) {
+	public ResponseEntity<?> deletePersonaje(@PathVariable Long id) {
 		return pj.deletePersonaje(id);
 	}
 
