@@ -25,18 +25,6 @@ public class PersonajeService {
 		return pjs;
 	}
 
-//	public ResponseEntity<?> getPersonajesUser(User user) {
-//		ResponseEntity<?> pjs = null;
-//		List<Personaje> persnjs = new ArrayList<>();
-//		for (Personaje pj : db.getPersonajes()) {
-//			if (pj.getUsuario().getId() == user.getId()) {
-//				persnjs.add(pj);
-//			}
-//		}
-//		pjs = ResponseEntity.status(HttpStatus.OK).body(persnjs);
-//		return pjs;
-//	}
-
 	public ResponseEntity<?> getPersonaje(Long idPersonaje) {
 		ResponseEntity<?> pj = null;
 		Personaje us = personajeRepository.findPersonajeByIdPersonaje(idPersonaje);
@@ -54,7 +42,7 @@ public class PersonajeService {
 			personajeRepository.save(sent);
 			resp = ResponseEntity.status(HttpStatus.OK).body(sent);
 		}else {
-			resp = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Introduzca un usuario.");
+			resp = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Introduzca un personaje.");
 		}
 		return resp;
 	}

@@ -23,7 +23,7 @@ public class UserService {
 	public ResponseEntity<?> readUser() {
 		ResponseEntity<?> users = null;
 		if(userRepository.findAll().iterator().hasNext()) {
-			users = ResponseEntity.ok(userRepository.findAll());
+			users = ResponseEntity.ok(userRepository.findAll().toString());
 		}else {
 			users = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existen usuarios.");
 		}
@@ -35,65 +35,30 @@ public class UserService {
 		ResponseEntity<?> customer = null;
 		Optional<User> us = userRepository.findById(id);
 		if (us != null) {
-			customer = ResponseEntity.status(HttpStatus.OK).body(us);
+			customer = ResponseEntity.status(HttpStatus.OK).body(us.toString());
 		} else {
 			customer = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
 		}
 		return customer;
 	}
 
-//	public ResponseEntity<?> readUserOld(int id) {
-//		ResponseEntity<?> customer = null;
-//		User us = db.getUsuarios().stream().filter(u -> u.getId() == id).findFirst().get();
-//		if (us != null) {
-//			customer = ResponseEntity.status(HttpStatus.OK).body(us);
-//		} else {
-//			customer = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
-//		}
-//		return customer;
-//	}
-//	
-
 	public ResponseEntity<?> createUser(User sent) {
 		ResponseEntity<?> user = null;
 		if(sent != null) {
 			userRepository.save(sent);
-			user = ResponseEntity.status(HttpStatus.OK).body(sent);
+			user = ResponseEntity.status(HttpStatus.OK).body(sent.toString());
 		}else {
 			user = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Introduzca un usuario.");
 		}
 		return user;
 	}
-	
-//	/** Antiguo create user*/
-//	public ResponseEntity<?> createUserOld(User sent) {
-//		db.getUsuarios().add(sent);
-//		return ResponseEntity.status(HttpStatus.CREATED).body(sent);
-//	}
-
-//	public ResponseEntity<?> addPersonajeAUser(Personaje pj, int user) {
-//		ResponseEntity<?> ent = null;
-//		Iterator<User> it = db.getUsuarios().iterator();
-//		boolean flag = false;
-//		while (it.hasNext() && !flag) {
-//			User elemento = it.next();
-//			if (elemento.getId() == user) {
-//				elemento.getPersonajes().add(pj);
-//				flag = true;
-//				ent = ResponseEntity.status(HttpStatus.OK).body(pj);
-//			} else {
-//				ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
-//			}
-//		}
-//		return ent;
-//	}
 
 	public ResponseEntity<?> updateUser(User change) {
 		ResponseEntity<?> ent = null;
 		User user = userRepository.findUserByName(change.getName());
 		if (change != null && user != null) {
 			userRepository.updateUser(change.getId(), change.getUserName());
-			ent = ResponseEntity.ok(change);
+			ent = ResponseEntity.ok(change.toString());
 		} else {
 			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
 		}

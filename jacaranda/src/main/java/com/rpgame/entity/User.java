@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class User implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 	private String name;
 	private String surname;
@@ -108,8 +108,12 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", surname=" + surname + ", userName=" + userName + ", mobileNumber="
-				+ mobileNumber + ", mail=" + mail + ", vip=" + vip + ", id=" + idUsuario + ", personajes=" + personajes + "]";
+		ArrayList<Long> pjs = new ArrayList<Long>();
+		for(Personaje pj: personajes) {
+			pjs.add(pj.getIdPersonaje());
+		}
+		return "User [name:" + name + ", surname:" + surname + ", userName:" + userName + ", mobileNumber:"
+				+ mobileNumber + ", mail:" + mail + ", vip:" + vip + ", id:" + idUsuario + ", personajes:" + pjs + "]";
 	}
 
 }

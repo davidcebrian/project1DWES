@@ -26,7 +26,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Personaje implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPersonaje;
 	private String name;
 	private String cara;
@@ -36,7 +36,7 @@ public class Personaje implements Serializable {
 	private String tipo;
 	private int poder;
 	private int nivel;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(foreignKey = @ForeignKey(name = "personaje_FK"),name = "idUsuario")
 	private User user;
 	@ManyToMany(cascade = CascadeType.PERSIST)
