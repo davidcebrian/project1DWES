@@ -24,7 +24,7 @@ import javax.persistence.OneToOne;
  */
 
 @Entity
-public class Personaje implements Comparable<Personaje>, Serializable {
+public class Personaje implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idPersonaje;
@@ -166,9 +166,4 @@ public class Personaje implements Comparable<Personaje>, Serializable {
 				+ mascota + "]";
 	}
 
-	@Override
-	public int compareTo(Personaje arg0) {
-		// TODO Auto-generated method stub
-		return this.getName().compareTo(arg0.getName());
-	}
 }

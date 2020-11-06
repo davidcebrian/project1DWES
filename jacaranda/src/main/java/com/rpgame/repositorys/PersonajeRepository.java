@@ -14,7 +14,7 @@ import com.rpgame.entity.Personaje;
 public interface PersonajeRepository extends CrudRepository<Personaje, Long>{
 	public  Personaje findPersonajeByName(String Name);
 	
-	public Personaje findPersonajeById(Long idUsuario);
+	public Personaje findPersonajeByIdPersonaje(Long idPersonaje);
 	
 	@Modifying(clearAutomatically = true)
 	@Query(value="update Personaje p set p.name = :newPjName where p.idPersonaje = :idPersonaje")

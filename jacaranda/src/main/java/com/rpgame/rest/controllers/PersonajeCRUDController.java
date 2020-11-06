@@ -29,12 +29,11 @@ public class PersonajeCRUDController {
 	@Autowired
 	private PersonajeService pj;
 	
-	@Autowired
-	private PersonajeRepository personajeRepository;
+
 
 	@GetMapping()
 	public ResponseEntity<?> getPersonajes() {
-		return ResponseEntity.ok(personajeRepository.findAll());
+		return ResponseEntity.ok(pj.getPersonajes());
 	}
 
 
@@ -43,10 +42,9 @@ public class PersonajeCRUDController {
 		return pj.getPersonaje(idPersonaje);
 	}
 
-	@PostMapping("/{idUser}")
-	public ResponseEntity<?> postPersonaje(@RequestBody Personaje sent, @PathVariable int idUser) {
-		personajeRepository.save(sent);
-		return ResponseEntity.ok(sent);
+	@PostMapping("")
+	public ResponseEntity<?> postPersonaje(@RequestBody Personaje sent) {
+		return pj.postPersonaje(sent);
 	}
 
 	@PutMapping()

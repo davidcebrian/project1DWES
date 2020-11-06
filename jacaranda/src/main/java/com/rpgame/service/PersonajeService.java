@@ -39,7 +39,7 @@ public class PersonajeService {
 
 	public ResponseEntity<?> getPersonaje(Long idPersonaje) {
 		ResponseEntity<?> pj = null;
-		Personaje us = personajeRepository.findPersonajeById(idPersonaje);
+		Personaje us = personajeRepository.findPersonajeByIdPersonaje(idPersonaje);
 		if (us != null) {
 			pj = ResponseEntity.status(HttpStatus.OK).body(us);
 		} else {
@@ -62,7 +62,7 @@ public class PersonajeService {
 
 	public ResponseEntity<?> putPersonaje(Personaje change) {
 		ResponseEntity<?> ent = null;
-		Personaje pj = personajeRepository.findPersonajeById(change.getIdPersonaje());
+		Personaje pj = personajeRepository.findPersonajeByIdPersonaje(change.getIdPersonaje());
 		if (change != null && pj != null) {
 			personajeRepository.updatePersonaje(change.getIdPersonaje(), change.getName());
 			ent = ResponseEntity.ok(change);
@@ -74,7 +74,7 @@ public class PersonajeService {
 
 	public ResponseEntity<?> deletePersonaje(Long id) {
 		ResponseEntity<?> ent = null;
-		Personaje pj = personajeRepository.findPersonajeById(id);
+		Personaje pj = personajeRepository.findPersonajeByIdPersonaje(id);
 		if(pj != null) {
 			personajeRepository.deleteById(id);			
 			ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuario borrado.");
