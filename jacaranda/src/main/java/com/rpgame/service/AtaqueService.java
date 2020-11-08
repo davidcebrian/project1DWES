@@ -1,6 +1,6 @@
 package com.rpgame.service;
 
-import java.util.Iterator;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,35 +8,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.rpgame.entity.Ataque;
-import com.rpgame.entity.Personaje;
+import com.rpgame.repositorys.AtaqueRepository;
 
 @Service
 public class AtaqueService {
 
 	@Autowired
-	private DatabaseService db;
+	private AtaqueRepository ataqueRepository;
 
 	public ResponseEntity<?> getAtaques() {
-		ResponseEntity<?> pjs = null;
-		pjs = ResponseEntity.status(HttpStatus.OK).body(db.getAtaques());
-		return pjs;
-	}
-
-	public ResponseEntity<?> getAtaquesPj(String idPj) {
 		ResponseEntity<?> atq = null;
-		for (Personaje pj : db.getPersonajes()) {
-			if (pj.getName().compareTo(idPj) == 0) {
-				atq = ResponseEntity.status(HttpStatus.OK).body(pj.getAtaques());
-			} else {
-				atq = ResponseEntity.status(HttpStatus.OK).body("No se encontró el personaje.");
-			}
+		if(ataqueRepository.findAll().iterator().hasNext()) {
+			atq = ResponseEntity.ok(ataqueRepository.findAll());
+		}else {
+			atq = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existen usuarios.");
 		}
 		return atq;
 	}
 
-	public ResponseEntity<?> getAtaque(int idAtaque) {
+//	public ResponseEntity<?> getAtaquesPj(String idPj) {
+//		ResponseEntity<?> atq = null;
+//		for (Personaje pj : db.getPersonajes()) {
+//			if (pj.getName().compareTo(idPj) == 0) {
+//				atq = ResponseEntity.status(HttpStatus.OK).body(pj.getAtaques());
+//			} else {
+//				atq = ResponseEntity.status(HttpStatus.OK).body("No se encontró el personaje.");
+//			}
+//		}
+//		return atq;
+//	}
+
+	public ResponseEntity<?> getAtaque(Long idAtaque) {
 		ResponseEntity<?> atq = null;
-		Ataque ata = db.getAtaques().stream().filter(a -> a.getIdAtaque() == idAtaque).findFirst().get();
+		Optional<Ataque> ata = ataqueRepository.findById(idAtaque);
 		if (ata != null) {
 			atq = ResponseEntity.status(HttpStatus.OK).body(ata);
 		} else {
@@ -45,66 +49,38 @@ public class AtaqueService {
 		return atq;
 	}
 
-	public ResponseEntity<?> postAtaque(Ataque sent, Personaje personaje) {
+	public ResponseEntity<?> postAtaque(Ataque sent) {
 		ResponseEntity<?> resp = null;
-		Iterator<Personaje> it = db.getPersonajes().iterator();
-		Personaje pj = null;
-		while (it.hasNext() && pj == null) {
-			Personaje elemento = it.next();
-			if (elemento.getName().compareTo(personaje.getName()) == 0) {
-				sent.getPersonajes().add(personaje);
-				elemento.getAtaques().add(sent);
-				db.getAtaques().add(sent);
-				pj = elemento;
-				resp = ResponseEntity.status(HttpStatus.CREATED).body(sent);
-			} else {
-				resp = ResponseEntity.status(HttpStatus.NOT_FOUND)
-						.body("El personaje al que desea añadir el ataque no existe.");
-				;
-			}
+		if(sent != null) {
+			ataqueRepository.save(sent);
+			resp = ResponseEntity.status(HttpStatus.OK).body(sent);
+		}else {
+			resp = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Introduzca un ataque.");
 		}
 		return resp;
 	}
 
 	public ResponseEntity<?> putAtaque(Ataque change) {
 		ResponseEntity<?> ent = null;
-		Iterator<Ataque> it = db.getAtaques().iterator();
-		boolean flag = false;
-		while (it.hasNext() && !flag) {
-			Ataque elemento = it.next();
-			if (elemento.getIdAtaque() == change.getIdAtaque()) {
-				elemento.setCooldown(change.getCooldown());
-				elemento.setDaño(change.getDaño());
-				elemento.setElemento(change.getElemento());
-				elemento.setNombre(change.getNombre());
-				elemento.setRango(change.getRango());
-				elemento.setTipo(change.getTipo());
-				flag = true;
-				ent = ResponseEntity.ok(change);
-			} else {
-				ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
-			}
+		Ataque ata = ataqueRepository.findAtaqueByNombre(change.getNombre());
+		if (change != null && ata != null) {
+			ataqueRepository.updateAtaque(change.getIdAtaque(), change.getNombre());
+			ent = ResponseEntity.ok(change.toString());
+		} else {
+			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
 		}
 		return ent;
 	}
 
-	public ResponseEntity<?> deleteAtaque(int id) {
+	public ResponseEntity<?> deleteAtaque(Long id) {
 		ResponseEntity<?> ent = null;
-		Ataque ataq = db.getAtaques().stream().filter(a -> a.getIdAtaque() == id).findFirst().get();
-		if (ataq != null) {
-			Iterator<Personaje> it = db.getPersonajes().iterator();
-			while (it.hasNext()) {
-				Personaje elemento = it.next();
-				if (elemento.getAtaques().contains(ataq)) {
-					elemento.getAtaques().remove(ataq);
-				}
-			}
-			db.getAtaques().remove(ataq);
-			ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Ataque borrado.");
-		} else {
-			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
+		Ataque ata = ataqueRepository.findAtaqueByIdAtaque(id);
+		if(ata != null) {
+			ataqueRepository.deleteById(id);			
+			ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuario borrado.");
+		}else {
+			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");			
 		}
-
 		return ent;
 	}
 }

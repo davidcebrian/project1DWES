@@ -30,28 +30,25 @@ public class AtaqueCRUDController {
 
 	@Autowired
 	private AtaqueService ataque;
-
-	@Autowired
-	private AtaqueRepository ataqueRepository;
 	
 	@GetMapping()
 	public ResponseEntity<?> getAtaques() {
 		return ataque.getAtaques();
 	}
 
-	@GetMapping("/personaje/{idPj}")
-	public ResponseEntity<?> getAtaquesPj(@PathVariable String idPj) {
-		return ataque.getAtaquesPj(idPj);
-	}
+//	@GetMapping("/personaje/{idPj}")
+//	public ResponseEntity<?> getAtaquesPj(@PathVariable String idPj) {
+//		return ataque.getAtaquesPj(idPj);
+//	}
 
 	@GetMapping("/{idAtaque}")
-	public ResponseEntity<?> getAtaque(@PathVariable int idAtaque) {
+	public ResponseEntity<?> getAtaque(@PathVariable Long idAtaque) {
 		return ataque.getAtaque(idAtaque);
 	}
 
 	@PostMapping("/personaje/{idPersonaje}")
-	public ResponseEntity<?> postAtaque(@RequestBody Ataque sent, @PathVariable Personaje idPersonaje) {
-		return ataque.postAtaque(sent, idPersonaje);
+	public ResponseEntity<?> postAtaque(@RequestBody Ataque sent) {
+		return ataque.postAtaque(sent);
 	}
 
 	@PutMapping()
@@ -60,7 +57,7 @@ public class AtaqueCRUDController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteAtaque(@PathVariable int id) {
+	public ResponseEntity<?> deleteAtaque(@PathVariable Long id) {
 		return ataque.deleteAtaque(id);
 	}
 

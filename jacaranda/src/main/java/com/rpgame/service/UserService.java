@@ -1,13 +1,16 @@
 package com.rpgame.service;
 
 
-import java.util.Optional;
+import java.util.stream.Stream;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 
 import com.rpgame.entity.User;
 import com.rpgame.repositorys.UserRepository;
@@ -18,6 +21,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	
 	public ResponseEntity<?> readUser() {
@@ -30,10 +35,24 @@ public class UserService {
 		return users;
 	}
 	
+	public User findByName(String name) {
+		Query query = entityManager
+				.createNativeQuery("Select * "
+									+ "from User "
+									+ "where lower(name) "
+									+ "like ?1"
+								, User.class);
+		query.setParameter(1, name);
+		Stream<User> users = query.getResultStream();
+		entityManager.close();
+		
+		return users.findAny().orElse(null);
+		
+	}
 	
 	public ResponseEntity<?> readUser(Long id) {
 		ResponseEntity<?> customer = null;
-		Optional<User> us = userRepository.findById(id);
+		User us = userRepository.findUserByIdUsuario(id);
 		if (us != null) {
 			customer = ResponseEntity.status(HttpStatus.OK).body(us.toString());
 		} else {
@@ -64,8 +83,7 @@ public class UserService {
 		}
 		return ent;
 	}
-		// customers.stream().filter(c -> c.getId() ==
-		// change.getId()).findFirst().get();
+		
 
 	public ResponseEntity<?> deleteUser(Long id) {
 		ResponseEntity<?> ent = null;
