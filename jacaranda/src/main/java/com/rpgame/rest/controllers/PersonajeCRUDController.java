@@ -47,9 +47,9 @@ public class PersonajeCRUDController {
 		return pj.postPersonaje(sent);
 	}
 
-	@PutMapping()
-	public ResponseEntity<?> putPersonaje(@RequestBody Personaje change) {
-		return pj.putPersonaje(change);
+	@PutMapping("/{idPersonaje}")
+	public ResponseEntity<?> putPersonaje(@RequestBody Personaje change, @PathVariable Long idPersonaje) {
+		return pj.putPersonaje(change, idPersonaje);
 	}
 
 	@DeleteMapping("/{id}")

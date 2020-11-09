@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rpgame.entity.Ataque;
-import com.rpgame.entity.Personaje;
-import com.rpgame.repositorys.AtaqueRepository;
+
 import com.rpgame.service.AtaqueService;
 
 /**
@@ -46,14 +45,14 @@ public class AtaqueCRUDController {
 		return ataque.getAtaque(idAtaque);
 	}
 
-	@PostMapping("/personaje/{idPersonaje}")
+	@PostMapping("")
 	public ResponseEntity<?> postAtaque(@RequestBody Ataque sent) {
 		return ataque.postAtaque(sent);
 	}
 
-	@PutMapping()
-	public ResponseEntity<?> putAtaque(@RequestBody Ataque change) {
-		return ataque.putAtaque(change);
+	@PutMapping("/{idAtaque}")
+	public ResponseEntity<?> putAtaque(@RequestBody Ataque change, @PathVariable Long idAtaque) {
+		return ataque.putAtaque(change, idAtaque);
 	}
 
 	@DeleteMapping("/{id}")

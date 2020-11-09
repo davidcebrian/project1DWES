@@ -1,12 +1,6 @@
 package com.rpgame.service;
 
 
-import java.util.stream.Stream;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +15,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@PersistenceContext
-	private EntityManager entityManager;
-	
 	
 	public ResponseEntity<?> readUser() {
 		ResponseEntity<?> users = null;
@@ -33,21 +24,6 @@ public class UserService {
 			users = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existen usuarios.");
 		}
 		return users;
-	}
-	
-	public User findByName(String name) {
-		Query query = entityManager
-				.createNativeQuery("Select * "
-									+ "from User "
-									+ "where lower(name) "
-									+ "like ?1"
-								, User.class);
-		query.setParameter(1, name);
-		Stream<User> users = query.getResultStream();
-		entityManager.close();
-		
-		return users.findAny().orElse(null);
-		
 	}
 	
 	public ResponseEntity<?> readUser(Long id) {
@@ -72,11 +48,11 @@ public class UserService {
 		return user;
 	}
 
-	public ResponseEntity<?> updateUser(User change) {
+	public ResponseEntity<?> updateUser(User change, Long id) {
 		ResponseEntity<?> ent = null;
 		User user = userRepository.findUserByName(change.getName());
 		if (change != null && user != null) {
-			userRepository.updateUser(change.getId(), change.getUserName());
+			userRepository.updateUser(id, change.getUserName());
 			ent = ResponseEntity.ok(change.toString());
 		} else {
 			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");

@@ -44,15 +44,14 @@ public class UserCRUDController {
 		return us.readUser(id);
 	}
 
-
 	@PostMapping()
 	public ResponseEntity<?> createUser(@RequestBody User sent) {		
 		return us.createUser(sent);
 	}
 
-	@PutMapping()
-	public ResponseEntity<?> updateUser(@RequestBody User change) {
-		return us.updateUser(change);
+	@PutMapping("/{idUsuario}")
+	public ResponseEntity<?> updateUser(@RequestBody User change, @PathVariable Long idUsuario) {
+		return us.updateUser(change, idUsuario);
 	}
 
 	@DeleteMapping("/{id}")

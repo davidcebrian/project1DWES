@@ -26,18 +26,6 @@ public class AtaqueService {
 		return atq;
 	}
 
-//	public ResponseEntity<?> getAtaquesPj(String idPj) {
-//		ResponseEntity<?> atq = null;
-//		for (Personaje pj : db.getPersonajes()) {
-//			if (pj.getName().compareTo(idPj) == 0) {
-//				atq = ResponseEntity.status(HttpStatus.OK).body(pj.getAtaques());
-//			} else {
-//				atq = ResponseEntity.status(HttpStatus.OK).body("No se encontró el personaje.");
-//			}
-//		}
-//		return atq;
-//	}
-
 	public ResponseEntity<?> getAtaque(Long idAtaque) {
 		ResponseEntity<?> atq = null;
 		Optional<Ataque> ata = ataqueRepository.findById(idAtaque);
@@ -60,11 +48,11 @@ public class AtaqueService {
 		return resp;
 	}
 
-	public ResponseEntity<?> putAtaque(Ataque change) {
+	public ResponseEntity<?> putAtaque(Ataque change, Long id) {
 		ResponseEntity<?> ent = null;
-		Ataque ata = ataqueRepository.findAtaqueByNombre(change.getNombre());
+		Ataque ata = ataqueRepository.findAtaqueByIdAtaque(id);
 		if (change != null && ata != null) {
-			ataqueRepository.updateAtaque(change.getIdAtaque(), change.getNombre());
+			ataqueRepository.updateAtaque(id, change.getNombre());
 			ent = ResponseEntity.ok(change.toString());
 		} else {
 			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");

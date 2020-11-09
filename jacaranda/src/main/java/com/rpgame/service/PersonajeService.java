@@ -48,11 +48,11 @@ public class PersonajeService {
 	}
 	
 
-	public ResponseEntity<?> putPersonaje(Personaje change) {
+	public ResponseEntity<?> putPersonaje(Personaje change, Long id) {
 		ResponseEntity<?> ent = null;
-		Personaje pj = personajeRepository.findPersonajeByIdPersonaje(change.getIdPersonaje());
+		Personaje pj = personajeRepository.findPersonajeByIdPersonaje(id);
 		if (change != null && pj != null) {
-			personajeRepository.updatePersonaje(change.getIdPersonaje(), change.getName());
+			personajeRepository.updatePersonaje(id, change.getName());
 			ent = ResponseEntity.ok(change);
 		} else {
 			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");

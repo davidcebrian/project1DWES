@@ -1,5 +1,7 @@
 package com.rpgame.repositorys;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,6 +18,8 @@ public interface AtaqueRepository extends CrudRepository<Ataque, Long>{
 	
 	public Ataque findAtaqueByIdAtaque(Long id);
 	
+	@Transactional
+	@Modifying(clearAutomatically = true)
 	@Query(value="update Ataque a set a.nombre = :newNombre where a.idAtaque = :idAtaque")
-	public Ataque updateAtaque(Long idAtaque, String newNombre);
+	public void updateAtaque(Long idAtaque, String newNombre);
 }

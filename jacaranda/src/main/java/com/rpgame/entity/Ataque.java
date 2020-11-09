@@ -22,7 +22,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Ataque implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAtaque;
 	private String nombre;
 	private double daño;

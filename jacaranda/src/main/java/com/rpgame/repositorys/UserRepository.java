@@ -3,6 +3,8 @@ package com.rpgame.repositorys;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -22,9 +24,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	
 	public User findUserByIdUsuario(Long idUsuario);
 	
+	@Transactional
 	@Modifying(clearAutomatically = true)
-	@Query(value="update User u set u.userName = :newUserName where u.idUsuario = :idUsuario")
-	public User updateUser(Long idUsuario, String newUserName);
+	@Query(value="UPDATE User u set u.userName = :newUserName where u.idUsuario = :idUsuario")
+	public void updateUser(Long idUsuario, String newUserName);
 	
 	@Query(value = "select * from User order by name", nativeQuery = true)
 	public List<User> findAllOrderedByName();
