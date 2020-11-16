@@ -72,5 +72,35 @@ public class UserService {
 		}
 		return ent;
 	}
+	
+	
+	/**
+	 * Add a new Document to this entity
+	 * @param id Identifier of the entity to be updated
+	 * @param mpf Multipart file 
+	 * @return Updated entity
+	 */
+	@Override
+	public User addDocument(String id, MultipartFile mpf) {
+		User c = null;
+		
+		try {
+			User doc = docReposiroty.save( new Document(fhService.createBlob(mpf), 
+															 mpf.getName(), 
+															 Integer.valueOf((int) mpf.getSize()))
+										);
+			
+			c = userRepository.findUserByIdUsuario(id);
+			c.setDocuments(c.getDocuments()!=null && !c.getDocuments().isEmpty()? c.getDocuments():new ArrayList<>());
+			c.getDocuments().add(doc);
+			userRepository.save(c);
+			
+		} catch (NumberFormatException | NotFoundException e) {
+			logger.debug(String.format("Customer with identifier %s could not be found ", id));
+		}
+			
+		
+		return c;
+	}
 
 }
