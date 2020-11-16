@@ -1,19 +1,31 @@
 package com.rpgame.service;
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.rpgame.entity.Document;
 import com.rpgame.entity.User;
+import com.rpgame.repositorys.DocumentRepository;
 import com.rpgame.repositorys.UserRepository;
 
+
 @Service
-public class UserService {
+public class UserService extends AbstractServiceUtils{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired 
+	private DocumentRepository docRepository;
+	
+	@Autowired
+	private FileHandlerService fhService;
 	
 	
 	public ResponseEntity<?> readUser() {
@@ -80,12 +92,12 @@ public class UserService {
 	 * @param mpf Multipart file 
 	 * @return Updated entity
 	 */
-	@Override
-	public User addDocument(String id, MultipartFile mpf) {
+	
+	public User addDocument(Long id, MultipartFile mpf) {
 		User c = null;
 		
 		try {
-			User doc = docReposiroty.save( new Document(fhService.createBlob(mpf), 
+			Document doc = docRepository.save( new Document(fhService.createBlob(mpf), 
 															 mpf.getName(), 
 															 Integer.valueOf((int) mpf.getSize()))
 										);
@@ -95,7 +107,7 @@ public class UserService {
 			c.getDocuments().add(doc);
 			userRepository.save(c);
 			
-		} catch (NumberFormatException | NotFoundException e) {
+		} catch (NumberFormatException e) {
 			logger.debug(String.format("Customer with identifier %s could not be found ", id));
 		}
 			

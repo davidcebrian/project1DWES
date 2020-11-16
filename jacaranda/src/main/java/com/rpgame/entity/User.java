@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Customer entity
@@ -28,6 +32,12 @@ public class User implements Serializable {
 	private String mobileNumber;
 	private String mail;
 	private boolean vip;
+	
+	@OneToMany
+	@JoinColumn(name="doc_id", foreignKey = @ForeignKey(name="doc_id_fk"), nullable = true)
+	@JsonIgnore
+	private List<Document> documents;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Personaje> personajes;
 
@@ -100,6 +110,14 @@ public class User implements Serializable {
 
 	public List<Personaje> getPersonajes() {
 		return personajes;
+	}
+
+	public List<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
 	}
 
 	public void setPersonajes(List<Personaje> personajes) {
