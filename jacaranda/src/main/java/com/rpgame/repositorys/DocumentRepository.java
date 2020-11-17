@@ -6,4 +6,6 @@ import com.rpgame.entity.Document;
 
 public interface DocumentRepository extends CrudRepository<Document, Long> {
 
+	public Document findDocumentById(Long id);
+
 }

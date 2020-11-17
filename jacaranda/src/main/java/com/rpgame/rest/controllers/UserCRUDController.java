@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.rpgame.entity.Document;
 import com.rpgame.entity.User;
 import com.rpgame.service.FileHandlerService;
 import com.rpgame.service.UserService;
@@ -77,4 +78,8 @@ public class UserCRUDController {
 		return ResponseEntity.ok("File "+ pic.getOriginalFilename()+ "successfully uploaded");
 	}
 
+	@GetMapping("/doc/{mpf}")
+	public ResponseEntity<?> getDocument(@PathVariable Long mpf){
+		return us.getDocument(mpf);
+	}
 }

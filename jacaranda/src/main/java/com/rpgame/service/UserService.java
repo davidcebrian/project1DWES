@@ -114,5 +114,36 @@ public class UserService extends AbstractServiceUtils{
 		
 		return c;
 	}
+	
+	/**
+	 * Add a new Document to this entity
+	 * @param id Identifier of the entity to be updated
+	 * @param mpf Multipart file 
+	 * @return Updated entity
+	 */
+	
+	public ResponseEntity<?> getDocument(Long mpf) {
+		Document dc = docRepository.findDocumentById(mpf);
+		ResponseEntity<?> ent = null;
+		if(dc != null) {
+			 ent = ResponseEntity.ok(dc);
+		}else {
+			 ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
+		}
+//		try {
+//			Document doc = docRepository.save( new Document(fhService.createBlob(mpf), 
+//															 mpf.getName(), 
+//															 Integer.valueOf((int) mpf.getSize()))
+//										);
+//			
+//			
+//			
+//		} catch (NumberFormatException e) {
+//			logger.debug(String.format("Customer with identifier %s could not be found ", id));
+//		}
+			
+		
+		return ent;
+	}
 
 }
