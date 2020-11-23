@@ -1,5 +1,7 @@
 package com.rpgame.rest.controllers;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.rpgame.entity.Document;
+
 import com.rpgame.entity.User;
-import com.rpgame.service.FileHandlerService;
 import com.rpgame.service.UserService;
 
 /**
@@ -34,9 +35,6 @@ public class UserCRUDController {
 	@Autowired
 	private UserService us;
 	
-
-	@Autowired
-	private FileHandlerService fileService;
 
 	@GetMapping
 	public ResponseEntity<?> readUser() {
@@ -75,7 +73,7 @@ public class UserCRUDController {
 	public ResponseEntity<?> uploadPicture(@RequestParam(name = "pic", required = false) MultipartFile pic, 
 								@PathVariable(required = false) Long id){
 		us.addDocument(id, pic);
-		return ResponseEntity.ok("File "+ pic.getOriginalFilename()+ "successfully uploaded");
+		return ResponseEntity.ok("File "+ pic.getOriginalFilename()+ " successfully uploaded");
 	}
 
 	@GetMapping("/doc/{mpf}")

@@ -1,5 +1,6 @@
 package com.rpgame.entity;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
 import javax.persistence.Entity;
@@ -8,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Document {
+public class Document implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

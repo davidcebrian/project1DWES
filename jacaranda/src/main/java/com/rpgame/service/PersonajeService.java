@@ -1,19 +1,25 @@
 package com.rpgame.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.rpgame.entity.Personaje;
+import com.rpgame.entity.User;
 import com.rpgame.repositorys.PersonajeRepository;
+import com.rpgame.repositorys.UserRepository;
 
 @Service
 public class PersonajeService {
 
 	@Autowired
 	private PersonajeRepository personajeRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	public ResponseEntity<?> getPersonajes() {
 		ResponseEntity<?> pjs = null;
@@ -34,6 +40,17 @@ public class PersonajeService {
 			pj = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
 		}
 		return pj;
+	}
+	
+	public List<Personaje> getPersonajeFromUser(Long idUser) throws Exception {
+		User us = userRepository.findUserByIdUsuario(idUser);
+		List<Personaje> pjs = null;
+		if (us != null) {
+			pjs = us.getPersonajes();
+		} else {
+			throw new Exception("El usuario no ha sido encontrado.");
+		}
+		return pjs;
 	}
 
 	public ResponseEntity<?> postPersonaje(Personaje sent) {

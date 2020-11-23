@@ -1,9 +1,13 @@
 package com.rpgame.service;
 
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,8 @@ import com.rpgame.entity.Document;
 import com.rpgame.entity.User;
 import com.rpgame.repositorys.DocumentRepository;
 import com.rpgame.repositorys.UserRepository;
+
+
 
 
 @Service
@@ -37,6 +43,8 @@ public class UserService extends AbstractServiceUtils{
 		}
 		return users;
 	}
+	
+	
 	
 	public ResponseEntity<?> readUser(Long id) {
 		ResponseEntity<?> customer = null;
@@ -98,7 +106,7 @@ public class UserService extends AbstractServiceUtils{
 		
 		try {
 			Document doc = docRepository.save( new Document(fhService.createBlob(mpf), 
-															 mpf.getName(), 
+															 mpf.getOriginalFilename(), 
 															 Integer.valueOf((int) mpf.getSize()))
 										);
 			
@@ -115,34 +123,24 @@ public class UserService extends AbstractServiceUtils{
 		return c;
 	}
 	
-	/**
-	 * Add a new Document to this entity
-	 * @param id Identifier of the entity to be updated
-	 * @param mpf Multipart file 
-	 * @return Updated entity
-	 */
 	
-	public ResponseEntity<?> getDocument(Long mpf) {
-		Document dc = docRepository.findDocumentById(mpf);
+	public ResponseEntity<?> getDocument(Long id){
 		ResponseEntity<?> ent = null;
-		if(dc != null) {
-			 ent = ResponseEntity.ok(dc);
-		}else {
-			 ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
+		HttpHeaders headers = new HttpHeaders();
+		Document dc = docRepository.findDocumentById(id);
+		Blob blob = dc.getPicture();
+		try {
+			byte[] bytes = blob.getBinaryStream().readAllBytes();
+			headers.set("Content-Disposition", String.format("attachment; filename=" + dc.getFileName()));
+			ent = ResponseEntity.ok()
+	                .headers(headers)
+	                .contentLength(bytes.length)
+	                .body(bytes);
+           
+		} catch (SQLException | IOException e) {
+			logger.debug(String.format("Customer with identifier %s could not be found ", id));
 		}
-//		try {
-//			Document doc = docRepository.save( new Document(fhService.createBlob(mpf), 
-//															 mpf.getName(), 
-//															 Integer.valueOf((int) mpf.getSize()))
-//										);
-//			
-//			
-//			
-//		} catch (NumberFormatException e) {
-//			logger.debug(String.format("Customer with identifier %s could not be found ", id));
-//		}
-			
-		
+	
 		return ent;
 	}
 
