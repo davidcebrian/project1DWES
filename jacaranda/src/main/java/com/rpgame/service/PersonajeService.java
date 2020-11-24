@@ -18,8 +18,16 @@ public class PersonajeService {
 
 	@Autowired
 	private PersonajeRepository personajeRepository;
+
 	@Autowired
 	private UserRepository userRepository;
+	
+	
+	@Autowired
+	public PersonajeService(UserRepository userRepository) {
+		super();
+		this.userRepository = userRepository;
+	}	
 
 	public ResponseEntity<?> getPersonajes() {
 		ResponseEntity<?> pjs = null;
@@ -89,4 +97,13 @@ public class PersonajeService {
 		return ent;
 	}
 
+	
+	public void setPersonajeRepository(PersonajeRepository personajeRepository) {
+		this.personajeRepository = personajeRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
 }
