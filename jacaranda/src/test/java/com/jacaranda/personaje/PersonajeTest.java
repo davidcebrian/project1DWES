@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.util.Assert;
 
 import com.rpgame.entity.Personaje;
 import com.rpgame.entity.User;
 import com.rpgame.repositorys.UserRepository;
 import com.rpgame.service.PersonajeService;
-
 
 public class PersonajeTest {
 	
@@ -58,10 +58,6 @@ public class PersonajeTest {
 		return pjs;
 	}
 	 * **/
-	@Test
-	public void test() {
-		
-	}
 	
 	@ParameterizedTest
 	@MethodSource("personajesFromUserData")
@@ -71,7 +67,6 @@ public class PersonajeTest {
 			when(mockedUserRepo.findUserByIdUsuario(idUsuario)).thenReturn(mockedUser);
 			when(mockedUser.getPersonajes()).thenReturn(lista);
 			sut.getPersonajeFromUser(idUsuario);
-		
 			
 		}catch(Exception e){
 			assert(idUsuario == null);
@@ -85,6 +80,18 @@ public class PersonajeTest {
 	      Arguments.of((long)1, lista),
 	      Arguments.of(null, null)
 	    );
+	}
+	
+	 @Test
+	public void getPersonajesFromUserTestError() {
+		try {
+			when(mockedUserRepo.findUserByIdUsuario((long)1)).thenReturn(null);
+			when(mockedUser.getPersonajes()).thenReturn(lista);
+			sut.getPersonajeFromUser((long)1);
+			
+		}catch(Exception e){
+			Assert.isInstanceOf(Exception.class, e);
+		}
 	}
 	
 	
