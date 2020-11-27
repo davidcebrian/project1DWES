@@ -46,7 +46,6 @@ public class PersonajeTest {
 		
 	}
 	
-	
 	/** --METODO A TESTEAR-- 
 	 	public List<Personaje> getPersonajeFromUser(Long idUser) throws Exception {
 		User us = userRepository.findUserByIdUsuario(idUser);
@@ -63,7 +62,6 @@ public class PersonajeTest {
 	public void test() {
 		
 	}
-	
 	
 	@ParameterizedTest
 	@MethodSource("personajesFromUserData")
