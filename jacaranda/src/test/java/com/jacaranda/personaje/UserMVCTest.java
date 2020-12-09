@@ -41,7 +41,7 @@ public void getUserByIdReturnsIsOk() throws Exception{
 			.thenReturn(Mockito.mock(User.class))
 			.thenReturn(null);
 	
-	mockMVC.perform(get(ROOT_PATH+"/3")).andExpect(status().isNotFound());
 	mockMVC.perform(get(ROOT_PATH+"/3")).andExpect(status().isOk());
+	mockMVC.perform(get(ROOT_PATH+"/3")).andExpect(status().isNotFound());
 }
 }
