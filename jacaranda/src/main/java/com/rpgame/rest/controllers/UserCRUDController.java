@@ -2,7 +2,10 @@ package com.rpgame.rest.controllers;
 
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import com.rpgame.entity.User;
 import com.rpgame.service.UserService;
@@ -38,27 +40,63 @@ public class UserCRUDController {
 
 	@GetMapping
 	public ResponseEntity<?> readUser() {
-		return us.readUser();
+		ResponseEntity<?> response = null;
+		ArrayList<User> user = (ArrayList<User>) us.readUser(); 
+		if (user != null) {
+			response = ResponseEntity.status(HttpStatus.OK).body(user);
+		} else {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
+		}
+		
+		return response;
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readUser(@PathVariable Long id) {
-		return us.readUser(id);
+		ResponseEntity<?> response = null;
+		User user = us.readUser(id);
+		if (user != null) {
+			response = ResponseEntity.status(HttpStatus.OK).body(user);
+		} else {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
+		}
+		return response;
 	}
 
 	@PostMapping()
 	public ResponseEntity<?> createUser(@RequestBody User sent) {		
-		return us.createUser(sent);
+		ResponseEntity<?> response = null;
+		User user = us.createUser(sent);
+		if (user != null) {
+			response = ResponseEntity.status(HttpStatus.OK).body(user);
+		} else {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
+		}
+		return response;
 	}
 
 	@PutMapping("/{idUsuario}")
 	public ResponseEntity<?> updateUser(@RequestBody User change, @PathVariable Long idUsuario) {
-		return us.updateUser(change, idUsuario);
+		ResponseEntity<?> response = null;
+		User user = us.updateUser(change, idUsuario);
+		if (user != null) {
+			response = ResponseEntity.status(HttpStatus.OK).body(user);
+		} else {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
+		}
+		return response;
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-		return us.deleteUser(id);
+		ResponseEntity<?> response = null;
+		User user = us.deleteUser(id);
+		if (user != null) {
+			response = ResponseEntity.status(HttpStatus.OK).body(user);
+		} else {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
+		}
+		return response;
 	}
 	
 	/**

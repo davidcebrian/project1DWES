@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Personaje entity
  * 
@@ -161,9 +163,9 @@ public class Personaje implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Personaje [name=" + name + ", cara=" + cara + ", cuerpo=" + cuerpo + ", pelo=" + pelo + ", ropa=" + ropa
-				+ ", tipo=" + tipo + ", poder=" + poder + ", nivel=" + nivel + ", ataques=" + ataques + ", mascota="
-				+ mascota + "]";
+		return "Personaje [idPersonaje=" + idPersonaje + ", name=" + name + ", cara=" + cara + ", cuerpo=" + cuerpo
+				+ ", pelo=" + pelo + ", ropa=" + ropa + ", tipo=" + tipo + ", poder=" + poder + ", nivel=" + nivel
+				+ ", user=" + user.getId() + ", ataques=" + ataques + ", mascota=" + mascota + "]";
 	}
 
 }

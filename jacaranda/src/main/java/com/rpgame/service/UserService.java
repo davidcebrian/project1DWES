@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,63 +34,52 @@ public class UserService extends AbstractServiceUtils{
 	private FileHandlerService fhService;
 	
 	
-	public ResponseEntity<?> readUser() {
-		ResponseEntity<?> users = null;
+	public List<User> readUser() {
+		ArrayList<User> users = null;
 		if(userRepository.findAll().iterator().hasNext()) {
-			users = ResponseEntity.ok(userRepository.findAll().toString());
+			users = (ArrayList<User>) userRepository.findAll();
 		}else {
-			users = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existen usuarios.");
+			users = null;
 		}
 		return users;
 	}
 	
 	
-	
-	public ResponseEntity<?> readUser(Long id) {
-		ResponseEntity<?> customer = null;
+	public User readUser(Long id) {
 		User us = userRepository.findUserByIdUsuario(id);
-		if (us != null) {
-			customer = ResponseEntity.status(HttpStatus.OK).body(us.toString());
-		} else {
-			customer = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
-		}
-		return customer;
+		return us;
 	}
 
-	public ResponseEntity<?> createUser(User sent) {
-		ResponseEntity<?> user = null;
+	public User createUser(User sent) {
+		User user = null;
 		if(sent != null) {
 			userRepository.save(sent);
-			user = ResponseEntity.status(HttpStatus.OK).body(sent.toString());
+			user = sent;
 		}else {
-			user = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Introduzca un usuario.");
+			user = null;
 		}
 		return user;
 	}
 
-	public ResponseEntity<?> updateUser(User change, Long id) {
-		ResponseEntity<?> ent = null;
+	public User updateUser(User change, Long id) {
 		User user = userRepository.findUserByName(change.getName());
 		if (change != null && user != null) {
 			userRepository.updateUser(id, change.getUserName());
-			ent = ResponseEntity.ok(change.toString());
 		} else {
-			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
+			user = null;
 		}
-		return ent;
+		return user;
 	}
 		
 
-	public ResponseEntity<?> deleteUser(Long id) {
-		ResponseEntity<?> ent = null;
+	public User deleteUser(Long id) {
 		User user = userRepository.findUserByIdUsuario(id);
 		if(user != null) {
 			userRepository.deleteById(id);			
-			ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuario borrado.");
 		}else {
-			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");			
+			user = null;			
 		}
-		return ent;
+		return user;
 	}
 	
 	

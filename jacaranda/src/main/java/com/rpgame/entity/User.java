@@ -126,12 +126,9 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		ArrayList<Long> pjs = new ArrayList<Long>();
-		for(Personaje pj: personajes) {
-			pjs.add(pj.getIdPersonaje());
-		}
-		return "User [name:" + name + ", surname:" + surname + ", userName:" + userName + ", mobileNumber:"
-				+ mobileNumber + ", mail:" + mail + ", vip:" + vip + ", id:" + idUsuario + ", personajes:" + pjs + "]";
+		return "User [idUsuario=" + idUsuario + ", name=" + name + ", surname=" + surname + ", userName=" + userName
+				+ ", mobileNumber=" + mobileNumber + ", mail=" + mail + ", vip=" + vip 
+				+ ", personajes=" + personajes + "]";
 	}
 
 }

@@ -13,7 +13,6 @@ import com.rpgame.entity.Ataque;
 @Repository(value = "ataqueRepository")
 public interface AtaqueRepository extends CrudRepository<Ataque, Long>{
 	@Modifying(clearAutomatically = true)
-	
 	public Ataque findAtaqueByNombre(String nombre);
 	
 	public Ataque findAtaqueByIdAtaque(Long id);

@@ -29,25 +29,19 @@ public class PersonajeService {
 		this.userRepository = userRepository;
 	}	
 
-	public ResponseEntity<?> getPersonajes() {
-		ResponseEntity<?> pjs = null;
+	public List<Personaje> getPersonajes() {
+		List<Personaje> pjs = null;
 		if(personajeRepository.findAll().iterator().hasNext()) {
-			pjs = ResponseEntity.ok(personajeRepository.findAll());
+			pjs = (List<Personaje>) personajeRepository.findAll();
 		}else {
-			pjs = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existen usuarios.");
+			pjs = null;
 		}
 		return pjs;
 	}
 
-	public ResponseEntity<?> getPersonaje(Long idPersonaje) {
-		ResponseEntity<?> pj = null;
+	public Personaje getPersonaje(Long idPersonaje) {
 		Personaje us = personajeRepository.findPersonajeByIdPersonaje(idPersonaje);
-		if (us != null) {
-			pj = ResponseEntity.status(HttpStatus.OK).body(us);
-		} else {
-			pj = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado.");
-		}
-		return pj;
+		return us;
 	}
 	
 	public List<Personaje> getPersonajeFromUser(Long idUser) throws Exception {
@@ -61,40 +55,28 @@ public class PersonajeService {
 		return pjs;
 	}
 
-	public ResponseEntity<?> postPersonaje(Personaje sent) {
-		ResponseEntity<?> resp = null;
+	public Personaje postPersonaje(Personaje sent) {
 		if(sent != null) {
 			personajeRepository.save(sent);
-			resp = ResponseEntity.status(HttpStatus.OK).body(sent);
-		}else {
-			resp = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Introduzca un personaje.");
 		}
-		return resp;
+		return sent;
 	}
 	
 
-	public ResponseEntity<?> putPersonaje(Personaje change, Long id) {
-		ResponseEntity<?> ent = null;
+	public Personaje putPersonaje(Personaje change, Long id) {
 		Personaje pj = personajeRepository.findPersonajeByIdPersonaje(id);
 		if (change != null && pj != null) {
 			personajeRepository.updatePersonaje(id, change.getName());
-			ent = ResponseEntity.ok(change);
-		} else {
-			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");
 		}
-		return ent;
+		return pj;
 	}
 
-	public ResponseEntity<?> deletePersonaje(Long id) {
-		ResponseEntity<?> ent = null;
+	public Personaje deletePersonaje(Long id) {
 		Personaje pj = personajeRepository.findPersonajeByIdPersonaje(id);
 		if(pj != null) {
 			personajeRepository.deleteById(id);			
-			ent = ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuario borrado.");
-		}else {
-			ent = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No encontrado");			
 		}
-		return ent;
+		return pj;
 	}
 
 	
