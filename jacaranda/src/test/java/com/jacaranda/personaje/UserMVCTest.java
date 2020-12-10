@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,7 +19,7 @@ import com.rpgame.rest.controllers.UserCRUDController;
 import com.rpgame.service.UserService;
 
 
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 @WebMvcTest(UserCRUDController.class)
 public class UserMVCTest {
 
@@ -26,14 +27,14 @@ public class UserMVCTest {
 private MockMvc mockMVC; // We use only the web layer, no server, no full context	
 
 @MockBean
-private  static UserService uService;
+private UserService uService;
 
 private final static String ROOT_PATH = "/user";
 
-@BeforeAll
-private static void init() {
-	uService = Mockito.mock(UserService.class);
-}
+//@BeforeAll
+//private void init() {
+//	uService = Mockito.mock(UserService.class);
+//}
 
 @Test
 public void getUserByIdReturnsIsOk() throws Exception{
