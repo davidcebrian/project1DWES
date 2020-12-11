@@ -31,6 +31,7 @@ public class User implements Serializable {
 	private String userName;
 	private String mobileNumber;
 	private String mail;
+	private String password;
 	private boolean vip;
 	
 	@OneToMany
@@ -46,14 +47,23 @@ public class User implements Serializable {
 		this.personajes = new ArrayList();
 	}
 
-	public User(String name, String surname, String userName, String mobileNumber, String mail) {
+	public User(String name, String surname, String userName, String mobileNumber, String mail, String password) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.userName = userName;
 		this.mobileNumber = mobileNumber;
 		this.mail = mail;
+		this.password = password;
 		this.personajes = new ArrayList();
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getName() {
