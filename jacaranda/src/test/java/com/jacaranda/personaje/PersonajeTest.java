@@ -37,7 +37,7 @@ public class PersonajeTest {
 		mockedUser = mock(User.class);
 		
 		lista = new ArrayList<Personaje>();
-		User us = new User("paco", "pacote", "paquirri", "66666666","asdf@es");
+		User us = new User("paco", "pacote", "paquirri", "66666666","asdf@es", "mailmail@mail.com");
 		Personaje uno = new Personaje(us, "uno", "cara1", "cuerpo1","pelo1","ropa1","tipo1", 10);
 		Personaje dos = new Personaje(us, "dos", "cara2", "cuerpo2","pelo2","ropa2","tipo2", 20);
 		lista.add(uno);
