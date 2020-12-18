@@ -40,6 +40,7 @@ public class User implements Serializable {
 	private List<Document> documents;
 	
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<Personaje> personajes;
 
 	public User() {

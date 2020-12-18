@@ -40,6 +40,7 @@ public class Personaje implements Serializable {
 	private int nivel;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(foreignKey = @ForeignKey(name = "personaje_FK"),name = "idUsuario")
+	@JsonIgnore
 	private User user;
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "personaje_ataques",

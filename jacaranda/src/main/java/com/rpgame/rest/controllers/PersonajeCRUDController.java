@@ -36,7 +36,7 @@ public class PersonajeCRUDController {
 	
 
 
-	@GetMapping()
+	@GetMapping("")
 	public ResponseEntity<?> getPersonajes() {
 		ResponseEntity<?> response = null;
 		List<Personaje> pjs = pj.getPersonajes();
