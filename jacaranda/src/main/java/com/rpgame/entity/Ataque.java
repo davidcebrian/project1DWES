@@ -25,7 +25,7 @@ public class Ataque implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAtaque;
 	private String nombre;
-	private double daño;
+	private double danio;
 	private String elemento;
 	private String tipo;
 	private double cooldown;
@@ -40,7 +40,7 @@ public class Ataque implements Serializable {
 	public Ataque(String nombre, double daño, String elemento, String tipo, double cooldown, int rango) {
 		super();
 		this.nombre = nombre;
-		this.daño = daño;
+		this.danio = daño;
 		this.elemento = elemento;
 		this.tipo = tipo;
 		this.cooldown = cooldown;
@@ -61,11 +61,11 @@ public class Ataque implements Serializable {
 	}
 
 	public double getDaño() {
-		return daño;
+		return danio;
 	}
 
 	public void setDaño(double daño) {
-		this.daño = daño;
+		this.danio = daño;
 	}
 
 	public String getElemento() {
@@ -106,7 +106,7 @@ public class Ataque implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ataque [nombre=" + nombre + ", daño=" + daño + ", elemento=" + elemento + ", tipo=" + tipo
+		return "Ataque [nombre=" + nombre + ", daño=" + danio + ", elemento=" + elemento + ", tipo=" + tipo
 				+ ", cooldown=" + cooldown + ", rango=" + rango + ", idAtaque=" + idAtaque + "]";
 	}
 
