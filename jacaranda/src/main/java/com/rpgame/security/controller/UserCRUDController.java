@@ -1,4 +1,4 @@
-package com.rpgame.rest.controllers;
+package com.rpgame.security.controller;
 
 
 
@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.rpgame.entity.User;
-import com.rpgame.service.UserService;
+import com.rpgame.security.model.User;
+import com.rpgame.security.model.dto.UserDto;
+import com.rpgame.security.service.UserService;
 
 /**
  * 
@@ -57,7 +58,7 @@ public class UserCRUDController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readUser(@PathVariable Long id) {
 		ResponseEntity<?> response = null;
-		User user = us.readUser(id);
+		UserDto user = us.readUser(id);
 		if (user != null) {
 			response = ResponseEntity.status(HttpStatus.OK).body(user);
 		} else {
@@ -69,7 +70,7 @@ public class UserCRUDController {
 	@PostMapping()
 	public ResponseEntity<?> createUser(@RequestBody User sent) {		
 		ResponseEntity<?> response = null;
-		User user = us.createUser(sent);
+		UserDto user = us.createUser(sent);
 		if (user != null) {
 			response = ResponseEntity.status(HttpStatus.OK).body(user);
 		} else {

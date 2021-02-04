@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.rpgame.entity.Personaje;
-import com.rpgame.entity.User;
 import com.rpgame.repositorys.PersonajeRepository;
-import com.rpgame.repositorys.UserRepository;
+import com.rpgame.security.model.User;
+import com.rpgame.security.repo.UserRepository;
 
 @Service
 public class PersonajeService {

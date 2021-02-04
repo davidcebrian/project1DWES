@@ -1,11 +1,11 @@
-package com.rpgame.service;
+package com.rpgame.security.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.rpgame.entity.User;
-import com.rpgame.repositorys.UserRepository;
+import com.rpgame.security.model.User;
+import com.rpgame.security.repo.UserRepository;
 
 public class OrderedUsersService {
 	@Autowired

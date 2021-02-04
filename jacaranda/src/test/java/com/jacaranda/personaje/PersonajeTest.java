@@ -15,8 +15,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.util.Assert;
 
 import com.rpgame.entity.Personaje;
-import com.rpgame.entity.User;
-import com.rpgame.repositorys.UserRepository;
+import com.rpgame.security.model.User;
+import com.rpgame.security.repo.UserRepository;
 import com.rpgame.service.PersonajeService;
 
 public class PersonajeTest {

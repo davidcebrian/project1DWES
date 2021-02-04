@@ -1,4 +1,4 @@
-package com.rpgame.repositorys;
+package com.rpgame.security.repo;
 
 
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.rpgame.entity.User;
+import com.rpgame.security.model.User;
 
 
 @Repository(value = "userRepository")

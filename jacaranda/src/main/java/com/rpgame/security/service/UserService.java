@@ -1,4 +1,4 @@
-package com.rpgame.service;
+package com.rpgame.security.service;
 
 
 import java.io.IOException;
@@ -14,9 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rpgame.entity.Document;
-import com.rpgame.entity.User;
 import com.rpgame.repositorys.DocumentRepository;
-import com.rpgame.repositorys.UserRepository;
+import com.rpgame.security.model.User;
+import com.rpgame.security.model.dto.DtoConverter;
+import com.rpgame.security.model.dto.UserDto;
+import com.rpgame.security.repo.UserRepository;
+import com.rpgame.service.AbstractServiceUtils;
+import com.rpgame.service.FileHandlerService;
 
 
 
@@ -26,6 +30,9 @@ public class UserService extends AbstractServiceUtils{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private DtoConverter converter;
 	
 	@Autowired 
 	private DocumentRepository docRepository;
@@ -45,12 +52,12 @@ public class UserService extends AbstractServiceUtils{
 	}
 	
 	
-	public User readUser(Long id) {
+	public UserDto readUser(Long id) {
 		User us = userRepository.findUserByIdUsuario(id);
-		return us;
+		return converter.fromUserToUserDTO(us);
 	}
 
-	public User createUser(User sent) {
+	public UserDto createUser(User sent) {
 		User user = null;
 		if(sent != null) {
 			userRepository.save(sent);
@@ -58,7 +65,7 @@ public class UserService extends AbstractServiceUtils{
 		}else {
 			user = null;
 		}
-		return user;
+		return converter.fromUserToUserDTO(user);
 	}
 
 	public User updateUser(User change, Long id) {

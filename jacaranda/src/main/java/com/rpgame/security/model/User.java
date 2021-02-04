@@ -1,4 +1,4 @@
-package com.rpgame.entity;
+package com.rpgame.security.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rpgame.entity.Document;
+import com.rpgame.entity.Personaje;
 
 /**
  * Customer entity

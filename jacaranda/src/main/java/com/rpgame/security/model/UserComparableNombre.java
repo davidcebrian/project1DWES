@@ -1,4 +1,4 @@
-package com.rpgame.entity;
+package com.rpgame.security.model;
 
 import java.util.Comparator;
 

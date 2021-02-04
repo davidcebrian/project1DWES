@@ -3,20 +3,16 @@ package com.jacaranda.personaje;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.rpgame.entity.User;
-import com.rpgame.rest.controllers.UserCRUDController;
-import com.rpgame.service.UserService;
+import com.rpgame.security.controller.UserCRUDController;
+import com.rpgame.security.model.dto.UserDto;
+import com.rpgame.security.service.UserService;
 
 
 //@ExtendWith(MockitoExtension.class)
@@ -39,7 +35,7 @@ private final static String ROOT_PATH = "/user";
 @Test
 public void getUserByIdReturnsIsOk() throws Exception{
 	Mockito.when(uService.readUser(Mockito.anyLong()))
-			.thenReturn(Mockito.mock(User.class))
+			.thenReturn(Mockito.mock(UserDto.class))
 			.thenReturn(null);
 	
 	mockMVC.perform(get(ROOT_PATH+"/3")).andExpect(status().isOk());
