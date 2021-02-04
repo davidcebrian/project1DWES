@@ -41,6 +41,7 @@ public class Personaje implements Serializable {
 	private int nivel;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(foreignKey = @ForeignKey(name = "personaje_FK"),name = "idUsuario")
+	@JsonIgnore
 	private User user;
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "personaje_ataques",
@@ -52,6 +53,20 @@ public class Personaje implements Serializable {
 	private Mascota mascota;
 
 	public Personaje() {
+		this.ataques = new ArrayList();
+	}
+	
+	public Personaje(String name, String cara, String cuerpo, String pelo, String ropa, String tipo,
+			int poder) {
+		super();
+		this.name = name;
+		this.cara = cara;
+		this.cuerpo = cuerpo;
+		this.pelo = pelo;
+		this.ropa = ropa;
+		this.tipo = tipo;
+		this.poder = poder;
+		this.nivel = 1;
 		this.ataques = new ArrayList();
 	}
 
