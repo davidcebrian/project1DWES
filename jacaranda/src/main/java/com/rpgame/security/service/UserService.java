@@ -41,14 +41,20 @@ public class UserService extends AbstractServiceUtils{
 	private FileHandlerService fhService;
 	
 	
-	public List<User> readUser() {
+	public List<UserDto> readUser() {
 		ArrayList<User> users = null;
+		ArrayList<UserDto> usersDto;
 		if(userRepository.findAll().iterator().hasNext()) {
 			users = (ArrayList<User>) userRepository.findAll();
+			usersDto = new ArrayList<UserDto>();
+			users.stream().forEach( (u) -> {
+				usersDto.add(converter.fromUserToUserDTO(u));
+			});
 		}else {
 			users = null;
+			usersDto = null;
 		}
-		return users;
+		return usersDto;
 	}
 	
 	
@@ -57,11 +63,11 @@ public class UserService extends AbstractServiceUtils{
 		return converter.fromUserToUserDTO(us);
 	}
 
-	public UserDto createUser(User sent) {
+	public UserDto createUser(UserDto sent) {
 		User user = null;
 		if(sent != null) {
-			userRepository.save(sent);
-			user = sent;
+			user = converter.fromUserDTOToUser(sent);
+			userRepository.save(user);
 		}else {
 			user = null;
 		}

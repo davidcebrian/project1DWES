@@ -45,7 +45,7 @@ public class UserCRUDController {
 	@GetMapping
 	public ResponseEntity<?> readUser() {
 		ResponseEntity<?> response = null;
-		ArrayList<User> user = (ArrayList<User>) us.readUser(); 
+		ArrayList<UserDto> user = (ArrayList<UserDto>) us.readUser(); 
 		if (user != null) {
 			response = ResponseEntity.status(HttpStatus.OK).body(user);
 		} else {
@@ -68,7 +68,7 @@ public class UserCRUDController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<?> createUser(@RequestBody User sent) {		
+	public ResponseEntity<?> createUser(@RequestBody UserDto sent) {		
 		ResponseEntity<?> response = null;
 		UserDto user = us.createUser(sent);
 		if (user != null) {

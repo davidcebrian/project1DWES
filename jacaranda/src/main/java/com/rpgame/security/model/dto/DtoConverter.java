@@ -1,9 +1,12 @@
 package com.rpgame.security.model.dto;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.rpgame.security.model.User;
 
 
-
+@Component
 public class DtoConverter {
 	public User fromUserDTOToUser(UserDto dto) {
 		User user  = new User();
